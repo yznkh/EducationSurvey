@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الأدمن | المركز الوطني للأمن السيبراني</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ncsc-primary: #005f87;
+            --ncsc-secondary: #003d57;
+            --ncsc-accent: #f7931e;
+            --ncsc-light: #e6f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .ncsc-header {
+            background: linear-gradient(135deg, var(--ncsc-primary), var(--ncsc-secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .ncsc-logo {
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .stat-card i {
+                font-size: 2rem;
+                color: var(--ncsc-primary);
+                margin-bottom: 1rem;
+            }
+
+            .stat-card h3 {
+                font-size: 1.8rem;
+                color: var(--ncsc-secondary);
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-card p {
+                color: #666;
+                margin-bottom: 0;
+            }
+
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+
+        .btn-ncsc {
+            background-color: var(--ncsc-accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+            .btn-ncsc:hover {
+                background-color: #e07d0a;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(247, 147, 30, 0.3);
+            }
+
+        .dashboard-container {
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="ncsc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center text-md-end">
+                    <img src="/images/NCSC_LOGO.png" alt="المركز الوطني للأمن السيبراني" class="ncsc-logo">
+                </div>
+                <div class="col-md-8 text-center text-md-end">
+                    <h1 class="h4 mb-1">لوحة تحكم الأدمن</h1>
+                    <p class="mb-0">إدارة استبيانات نضج مراكز العمليات الأمنية</p>
+                </div>
+                <div class="col-md-2 text-center text-md-start">
+                    <button id="logoutBtn" class="btn btn-ncsc btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i> تسجيل الخروج
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sector Selection -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label for="sectorSelect" class="form-label">اختر القطاع</label>
+                <select id="sectorSelect" class="form-select">
+                    <option value="education">التعليم</option>
+                    <option value="health">الصحة</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-poll"></i>
+                    <h3 id="totalSubmissions">0</h3>
+                    <p>إجمالي الاستبيانات</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-building"></i>
+                    <h3 id="totalOrganizations">0</h3>
+                    <p>إجمالي المؤسسات</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 id="socAdoptionRate">0%</h3>
+                    <p>معدل اعتماد SOC</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-desktop"></i>
+                    <h3 id="avgItCoverage">0%</h3>
+                    <p>متوسط تغطية IT</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-network-wired"></i>
+                    <h3 id="avgOtCoverage">0%</h3>
+                    <p>متوسط تغطية OT/IoT</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3 id="avgSocTeamSize">0</h3>
+                    <p>متوسط حجم فريق SOC</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3 id="soc247Rate">0%</h3>
+                    <p>عمليات SOC 24/7</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-brain"></i>
+                    <h3 id="threatIntelRate">0%</h3>
+                    <p>دمج الاستخبارات</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="row g-4 mt-3">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <h4 class="text-center mb-3">توزيع اعتماد SOC</h4>
+                    <canvas id="socAdoptionChart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <h4 class="text-center mb-3">الاستبيانات حسب التاريخ</h4>
+                    <canvas id="surveysByDateChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Responses Table -->
+        <div class="mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="h5 mb-0"><i class="fas fa-table me-2"></i> ردود الاستبيانات</h3>
+                <button id="exportExcelBtn" class="btn btn-ncsc">
+                    <i class="fas fa-file-excel me-1"></i> تصدير إلى Excel
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">المؤسسة</th>
+                            <th scope="col">التاريخ</th>
+                            <th scope="col">القطاع</th>
+                            <th scope="col">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="responsesTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-1 text-white">© 2025 المركز الوطني للأمن السيبراني. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <script>
+        // Chart instances
+        let socAdoptionChart, surveysByDateChart;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check JWT
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/Main.html';
+                return;
+            }
+
+            // Logout Button
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                localStorage.removeItem('token');
+                window.location.href = '/';
+            });
+
+            // Sector Selection
+            const sectorSelect = document.getElementById('sectorSelect');
+            sectorSelect.addEventListener('change', () => {
+                loadDashboardData(sectorSelect.value);
+            });
+
+            // Export Excel
+            document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+
+            // Load initial data
+            loadDashboardData(sectorSelect.value);
+        });
+
+        async function loadDashboardData(sector) {
+            try {
+                // Show loading state
+                document.getElementById('responsesTable').innerHTML =
+                    '<tr><td colspan="4" class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></td></tr>';
+
+                // Fetch stats from API
+                const statsResponse = await fetch(`/api/survey/stats?sector=${sector}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!statsResponse.ok) {
+                    if (statsResponse.status === 401) {
+                        localStorage.removeItem('token');
+                        window.location.href = '/Main.html';
+                    }
+                    throw new Error('فشل تحميل البيانات');
+                }
+
+                const statsData = await statsResponse.json();
+
+                // Update Stats Cards
+                document.getElementById('totalSubmissions').textContent = statsData.totalSubmissions;
+                document.getElementById('totalOrganizations').textContent = statsData.totalOrganizations;
+                document.getElementById('socAdoptionRate').textContent = `${statsData.socAdoptionRate}%`;
+                document.getElementById('avgItCoverage').textContent = `${statsData.avgItCoverage}%`;
+                document.getElementById('avgOtCoverage').textContent = `${statsData.avgOtCoverage}%`;
+                document.getElementById('avgSocTeamSize').textContent = statsData.avgSocTeamSize;
+                document.getElementById('soc247Rate').textContent = `${statsData.soc247Rate}%`;
+                document.getElementById('threatIntelRate').textContent = `${statsData.threatIntelRate}%`;
+
+                // Render Charts
+                renderCharts(statsData);
+
+                // Load Submissions for Table
+                const submissionsResponse = await fetch(`/api/survey/submissions?sector=${sector}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!submissionsResponse.ok) {
+                    throw new Error('فشل تحميل قائمة الاستبيانات');
+                }
+
+                const submissions = await submissionsResponse.json();
+                renderSubmissionsTable(submissions);
+
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                alert(`حدث خطأ أثناء تحميل البيانات: ${error.message}`);
+                document.getElementById('responsesTable').innerHTML =
+                    '<tr><td colspan="4" class="text-center">خطأ في تحميل البيانات</td></tr>';
+            }
+        }
+
+        function renderCharts(data) {
+            // SOC Adoption Chart
+            const socChart = document.getElementById('socAdoptionChart');
+            const socCtx = socChart.getContext('2d');
+
+            if (window.socAdoptionChart instanceof Chart) {
+                window.socAdoptionChart.destroy();
+            }
+
+            window.socAdoptionChart = new Chart(socCtx, {
+                type: 'pie',
+                data: {
+                    labels: data.answerDistribution.labels,
+                    datasets: [{
+                        data: data.answerDistribution.values,
+                        backgroundColor: ['#005f87', '#f7931e', '#003d57']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'top' } }
+                }
+            });
+
+            // Surveys by Date Chart
+            const dateChart = document.getElementById('surveysByDateChart');
+            const dateCtx = dateChart.getContext('2d');
+
+            if (window.surveysByDateChart instanceof Chart) {
+                window.surveysByDateChart.destroy();
+            }
+
+            window.surveysByDateChart = new Chart(dateCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.surveysByDate.labels,
+                    datasets: [{
+                        label: 'عدد الاستبيانات',
+                        data: data.surveysByDate.values,
+                        backgroundColor: '#005f87'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        function renderSubmissionsTable(submissions) {
+            const tbody = document.getElementById('responsesTable');
+            tbody.innerHTML = '';
+
+            if (submissions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center">لا توجد بيانات</td></tr>';
+                return;
+            }
+
+            submissions.forEach(submission => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                        <td>${submission.OrganizationName}</td>
+                        <td>${new Date(submission.SubmissionDate).toLocaleString('ar')}</td>
+                        <td>${submission.Sector === 'education' ? 'التعليم' : 'الصحة'}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="viewDetails(${submission.Id})">
+                                <i class="fas fa-eye"></i> عرض
+                            </button>
+                        </td>
+                    `;
+                tbody.appendChild(row);
+            });
+        }
+
+        async function exportToExcel() {
+            try {
+                const sector = document.getElementById('sectorSelect').value;
+                const token = localStorage.getItem('token');
+
+                // عرض تحميل
+                const exportBtn = document.getElementById('exportExcelBtn');
+                const originalHtml = exportBtn.innerHTML;
+                exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التصدير...';
+                exportBtn.disabled = true;
+
+                // استدعاء API لتصدير البيانات
+                const response = await fetch(`/api/survey/export-full?sector=${sector}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'فشل في تصدير البيانات');
+                }
+
+                // تحويل الاستجابة إلى blob وتنزيل الملف
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `استبيان_الأمن_السيبراني_${sector}_${new Date().toISOString().split('T')[0]}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+
+            } catch (error) {
+                console.error('Export error:', error);
+                alert(`حدث خطأ أثناء التصدير: ${error.message}`);
+            } finally {
+                // إعادة زر التصدير إلى حالته الأصلية
+                const exportBtn = document.getElementById('exportExcelBtn');
+                exportBtn.innerHTML = '<i class="fas fa-file-excel me-1"></i> تصدير إلى Excel';
+                exportBtn.disabled = false;
+            }
+        }
+
+        function viewDetails(id) {
+            alert(`عرض تفاصيل الاستبيان ID: ${id}\nسيتم عرض جميع الإجابات لهذه المؤسسة.`);
+            // يمكنك هنا جلب تفاصيل الاستبيان من API الخاص بك
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+﻿<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entity's SOC and SIEM Enablement Questionnaire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ncsc-primary: #005f87;
+            --ncsc-secondary: #003d57;
+            --ncsc-accent: #f7931e;
+            --ncsc-light: #e6f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .ncsc-header {
+            background: linear-gradient(135deg, var(--ncsc-primary), var(--ncsc-secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 5%;
+        }
+
+        .ncsc-logo {
+            height: 60px;
+            margin-left: 15px;
+        }
+
+        .main-container {
+            max-width: 900px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin: -50px auto 30px;
+            position: relative;
+            border: 1px solid #e0e0e0;
+        }
+
+        .questionnaire-header {
+            background-color: var(--ncsc-primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .questionnaire-body {
+            padding: 2.5rem;
+        }
+
+        .purpose-card {
+            border-left: 4px solid var(--ncsc-accent);
+            background-color: var(--ncsc-light);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .section-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .section-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .section-card h3 {
+                color: var(--ncsc-primary);
+                border-bottom: 2px solid var(--ncsc-accent);
+                padding-bottom: 0.5rem;
+                display: inline-block;
+            }
+
+        .instruction-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .instruction-list li {
+                padding: 0.5rem 0;
+                position: relative;
+                padding-right: 1.5rem;
+            }
+
+                .instruction-list li:before {
+                    content: "\f00c";
+                    font-family: "Font Awesome 6 Free";
+                    font-weight: 900;
+                    color: var(--ncsc-accent);
+                    position: relative;
+                    right: 3px;
+                }
+
+        .btn-ncsc {
+            background-color: var(--ncsc-accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(247, 147, 30, 0.3);
+        }
+
+            .btn-ncsc:hover {
+                background-color: #e07d0a;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(247, 147, 30, 0.4);
+            }
+
+        .time-estimate {
+            background-color: var(--ncsc-light);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1.5rem 0;
+            border: 1px dashed var(--ncsc-primary);
+        }
+
+        .ncsc-footer {
+            background-color: var(--ncsc-secondary);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 0 auto 20px;
+                border-radius: 0;
+            }
+
+            .questionnaire-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with NCSC Logo -->
+    <header class="ncsc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center text-md-start">
+                    <a href="/Pages/AdminLogin.html">
+                        <img src="../Image/NCSC_LOGO.png" alt="National Cybersecurity Center" class="ncsc-logo">
+                    </a>
+                </div>
+                <div class="col-md-10 text-center text-md-end">
+                    <h1 class="h4 mb-0">National Cybersecurity Center</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Questionnaire Container -->
+    <div class="main-container">
+        <div class="questionnaire-header">
+            <h1 class="h2 mb-3">Entity's SOC and SIEM Enablement Questionnaire (SOC)</h1>
+        </div>
+
+        <div class="questionnaire-body">
+            <!-- Purpose Card -->
+            <div class="purpose-card">
+                <h2 class="h4">Purpose and Instructions</h2>
+                <p>
+                    As part of our national effort to strengthen cybersecurity across critical sectors, this questionnaire aims to assess the current cybersecurity monitoring capabilities of individual entities and support the establishment of Entity's SOC Capability to integrate with the Sectorial CERT.
+                </p>
+            </div>
+
+            <!-- Confidentiality Notice -->
+            <div class="alert alert-info mt-4">
+                <h3 class="h6"><i class="fas fa-lock me-2"></i> Confidentiality disclaimer</h3>
+                <p class="mb-0">
+                    All information provided through this questionnaire will be treated with the strictest confidentiality and used solely for the purpose of enhancing national cybersecurity.
+                    The data is stored in a secure environment with the highest standards of protection in place.
+                </p>
+            </div>
+
+            <!-- Sections Overview -->
+            <h2 class="h4 mb-4" style="color: var(--ncsc-primary);">This questionnaire is divided into two essential parts:</h2>
+
+            <div class="row">
+                <!-- Part 1 Card -->
+                <div class="col-md-6 mb-4">
+                    <div class="section-card h-100">
+                        <h3 class="h5"><i class="fas fa-chart-line me-2"></i> Part 1 : SOC Maturity and Readiness Assessment</h3>
+                        <p>
+                            This section is designed to help us evaluate your entity’s current Security Operations Center (SOC) maturity and its readiness to connect to the Sectorial CERT. The information collected will allow us to:
+                        </p>
+                        <ul class="instruction-list">
+                            <li>Understand your existing cybersecurity monitoring infrastructure and practices across IT and OT/IoT/IIoT environments.</li>
+                            <li>Assess the level of integration, governance, compliance, and incident response capabilities.</li>
+                            <li>Identify gaps and opportunities for capacity building, advanced services, and integration with sectorial cybersecurity infrastructure.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Part 2 Card -->
+                <div class="col-md-6 mb-4">
+                    <div class="section-card h-100">
+                        <h3 class="h5"><i class="fas fa-server me-2"></i> Part 2: Asset Inventory and Technical Sizing Inputs</h3>
+                        <p>
+                            This section focuses on gathering key technical and operational inputs required for:
+                        </p>
+                        <ul class="instruction-list">
+                            <li>
+                                Understanding the existing SOC Monitoring capabilities for entities that have SOC/SIEM capabilities.
+                            </li>
+                            <li>Sizing the SOC and SIEM infrastructure needed to be implemented at entities who don't have SOC/SIEM Monitoring Capabilities.</li>
+                            <li> Providing realistic data to potential bidders to enable accurate design, scoping, and cost estimation for SIEM deployment, log ingestion, threat detection, and SOC services.</li>
+                            <li>Understanding the scale, diversity, and criticality of your IT and OT assets, including network devices, servers, endpoints, ICS/SCADA components, IoT/IIoT/IoMT systems, and communication protocols.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <h2 class="h4 mb-3" style="color: var(--ncsc-primary);">Instructions for Completing the Questionnaire</h2>
+            <div class="section-card">
+                <ul class="instruction-list">
+                    <li>  Please answer all questions to the best of your knowledge. Where estimations are necessary, indicate accordingly.</li>
+                    <li> For multiple-choice or checklist-style questions, select all options that apply.</li>
+                    <li> If additional context or clarification is needed, please use the optional comment fields.</li>
+                    <li>Your input is essential to ensure the successful planning, deployment, and integration of a Entity's SOC and the Sectorial CERT</li>
+                </ul>
+            </div>
+
+
+
+            <!-- Start Button -->
+            <div class="text-center mt-5">
+                <a href="/Pages/Sectors.html" class="btn btn-ncsc btn-lg">
+                    <i class="fas fa-play me-2"></i> Start Survey
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-muted mt-5 mb-4">
+        <div class="container">
+            <p class="mb-1">© 2025 National Cybersecurity Center. All rights reserved.</p>
+            <p class="mb-0">
+                <a href="#" class="text-muted me-3">Terms of Service</a>
+                <a href="#" class="text-muted">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // يمكن إضافة أي تفاعلات إضافية هنا
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة تأثيرات للبطاقات عند التمرير
+            const cards = document.querySelectorAll('.section-card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease-out';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

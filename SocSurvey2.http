@@ -1,0 +1,6 @@
+@SocSurvey2_HostAddress = http://localhost:5295
+
+GET {{SocSurvey2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

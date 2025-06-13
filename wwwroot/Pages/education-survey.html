@@ -1,0 +1,350 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Survey</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        :root {
+            --ncsc-primary: #005f87;
+            --ncsc-secondary: #003d57;
+            --ncsc-accent: #f7931e;
+            --ncsc-light: #e6f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .ncsc-header {
+            background: linear-gradient(135deg, var(--ncsc-primary), var(--ncsc-secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .ncsc-logo {
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        .main-container {
+            max-width: 1000px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin: 0 auto 30px;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section-title {
+            color: var(--ncsc-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--ncsc-light);
+        }
+
+        .question-group {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: all 0.3s;
+        }
+
+            .question-group:hover {
+                background-color: var(--ncsc-light);
+            }
+
+        .question-label {
+            font-weight: 600;
+            color: var(--ncsc-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 4px;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: var(--ncsc-accent);
+                box-shadow: 0 0 0 0.25rem rgba(247, 147, 30, 0.25);
+            }
+
+        .btn-ncsc {
+            background-color: var(--ncsc-accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(247, 147, 30, 0.3);
+        }
+
+            .btn-ncsc:hover {
+                background-color: #e07d0a;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(247, 147, 30, 0.4);
+            }
+    </style>
+</head>
+<body>
+    <!-- Header with NCSC Logo -->
+    <header class="ncsc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center text-md-start">
+                    <img src="../Image/NCSC_LOGO.png" alt="National Cybersecurity Center" class="ncsc-logo">
+                </div>
+                <div class="col-md-10 text-center text-md-start">
+                    <h1 class="h4 mb-0">National Cybersecurity Center</h1>
+                    <p class="mb-0">Education Sector SOC Maturity Assessment</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <h2 class="h2 mb-3" style="color: #005f87; text-align:center;">Education Sector Survey</h2>
+        <form id="surveyForm">
+            <!--<label for="organizationName" class="form-label">Organization Name</label>
+            <input type="text" class="form-control" id="organizationName" name="organizationName" required>-->
+
+            <!-- IT Asset Inventory Section -->
+            <h2 class="section-title"><i class="fas fa-server me-2"></i> IT Asset Inventory</h2>
+            <div id="itAssetContainer"></div>
+
+            <!-- OT IoT IIoT Section -->
+            <h2 class="section-title"><i class="fas fa-network-wired me-2"></i> OT IoT IIoT</h2>
+            <div id="otIotContainer"></div>
+
+            <!-- SOC Capabilities Assessment Section -->
+            <h2 class="section-title"><i class="fas fa-shield-alt me-2"></i> SOC Capabilities Assessment</h2>
+            <div id="socCapabilitiesContainer"></div>
+
+            <button type="submit" class="btn btn-ncsc mt-3" style="margin-left:40%;">Submit Survey</button>
+        </form>
+        <div id="resultMsg" class="mt-3"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sector = localStorage.getItem('selectedSector') || 'education';
+
+            const fixedOptions = {
+                2: ['Government', 'Private'],
+                3: ['University', 'School', 'Technical Institute', 'Research Center', 'Other'],
+                5: ['Amman', 'Irbid', 'Zarqa', 'Balqa', 'Madaba', 'Jerash', 'Ajloun', 'Karak', 'Tafilah', "Ma'an"],
+                32: ['In-house', 'Outsourced', 'Hybrid'],
+                33: ['IT only', 'OT only', 'Both'],
+                34: ['< 1 year', '1-3 years', '3-5 years', '> 5 years'],
+                38: ['Firewalls', 'Routers', 'LMS', 'AD', 'Student Info Systems', 'OT systems'],
+                39: ['< 25 %', '25-50%', '51 - 75 %', '>75%'],
+                41: ['HVAC', 'BMS', 'UPS', 'Access Control', 'None'],
+                42: ['< 25 %', '25-50%', '51 - 75 %', '>75%'],
+                43: ['Microsoft Sentinel', 'Splunk', 'IBM QRadar', 'Other'],
+                49: ['Firewall', 'IDS', 'Endpoint', 'OT Sensors', 'LMS', 'Application Logs'],
+                63: ['Centralized', 'Distributed', 'Hybrid'],
+                64: ['Splunk', 'IBM QRadar', 'Azure Sentinel', 'Other']
+                 };
+
+            async function loadQuestions() {
+                const resultMsg = document.getElementById('resultMsg');
+                try {
+                    // جلب الأسئلة من API
+                    const response = await fetch(`/api/survey/questions?sector=${sector}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const questions = await response.json();
+
+                    // التحقق مما إذا كانت الأسئلة موجودة
+                    if (!questions || !Array.isArray(questions) || questions.length === 0) {
+                        resultMsg.textContent = 'لا توجد أسئلة متاحة من قاعدة البيانات.';
+                        resultMsg.className = 'alert alert-warning';
+                        return;
+                    }
+
+                    // Containers for each section
+                    const itAssetContainer = document.getElementById('itAssetContainer');
+                    const otIotContainer = document.getElementById('otIotContainer');
+                    const socCapabilitiesContainer = document.getElementById('socCapabilitiesContainer');
+
+                    console.log('Questions loaded:', questions); // تصحيح الأخطاء
+
+                    questions.forEach(question => {
+                        // التحقق من وجود question.id
+                        if (!question.id) {
+                            console.warn('Question missing ID:', question);
+                            return;
+                        }
+
+                        const div = document.createElement('div');
+                        div.classList.add('question-group');
+
+                        const label = document.createElement('label');
+                        label.className = 'question-label';
+                        label.textContent = question.text || 'سؤال بدون نص';
+
+                        let input;
+
+                        if (fixedOptions[question.id]) {
+                            if (question.id === 38 || question.id === 41) {
+                                input = document.createElement('div');
+                                fixedOptions[question.id].forEach(opt => {
+                                    const wrapper = document.createElement('div');
+                                    wrapper.className = 'form-check';
+
+                                    const checkbox = document.createElement('input');
+                                    checkbox.type = 'checkbox';
+                                    checkbox.className = 'form-check-input';
+                                    checkbox.name = `q_${question.id}`;
+                                    checkbox.value = opt;
+
+                                    const checkLabel = document.createElement('label');
+                                    checkLabel.className = 'form-check-label';
+                                    checkLabel.textContent = opt;
+
+                                    wrapper.appendChild(checkbox);
+                                    wrapper.appendChild(checkLabel);
+                                    input.appendChild(wrapper);
+                                });
+                            } else {
+                                input = document.createElement('select');
+                                input.className = 'form-select';
+                                const defaultOption = document.createElement('option');
+                                defaultOption.value = '';
+                                defaultOption.textContent = 'Select an option';
+                                input.appendChild(defaultOption);
+                                fixedOptions[question.id].forEach(opt => {
+                                    const option = document.createElement('option');
+                                    option.value = opt;
+                                    option.textContent = opt;
+                                    input.appendChild(option);
+                                });
+                            }
+                        } else if (question.type === 'text' || question.type === 'textarea') {
+                            input = document.createElement(question.type === 'textarea' ? 'textarea' : 'input');
+                            input.type = 'text';
+                            input.className = 'form-control';
+                        } else if (question.type === 'number') {
+                            input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'form-control';
+                        } else if (question.type === 'dropdown') {
+                            input = document.createElement('select');
+                            input.className = 'form-select';
+                            const defaultOption = document.createElement('option');
+                            defaultOption.value = '';
+                            defaultOption.textContent = 'Select an option';
+                            input.appendChild(defaultOption);
+                            (question.options || []).forEach(opt => {
+                                const option = document.createElement('option');
+                                option.value = opt;
+                                option.textContent = opt;
+                                input.appendChild(option);
+                            });
+                        } else if (question.type === 'yesno') {
+                            input = document.createElement('select');
+                            input.className = 'form-select';
+                            ['Yes', 'No'].forEach(opt => {
+                                const option = document.createElement('option');
+                                option.value = opt;
+                                option.textContent = opt;
+                                input.appendChild(option);
+                            });
+                        } else {
+                            input = document.createElement('input');
+                            input.type = 'text';
+                            input.className = 'form-control';
+                        }
+
+                        input.name = `q_${question.id}`;
+                        if (question.required) input.required = true;
+
+                        div.appendChild(label);
+                        div.appendChild(input);
+
+                        // تعيين السؤال إلى القسم المناسب بناءً على ID
+                        if (question.id >= 1 && question.id <= 21) {
+                            itAssetContainer.appendChild(div);
+                        } else if (question.id >= 22 && question.id <= 31) {
+                            otIotContainer.appendChild(div);
+                        } else {
+                            socCapabilitiesContainer.appendChild(div);
+                        }
+                    });
+
+                    // التحقق من الحاويات بعد التعبئة
+                    [itAssetContainer, otIotContainer, socCapabilitiesContainer].forEach(container => {
+                        if (!container.hasChildNodes()) {
+                            const emptyMsg = document.createElement('p');
+                            emptyMsg.textContent = 'لا توجد أسئلة في هذا القسم.';
+                            emptyMsg.className = 'text-muted';
+                            container.appendChild(emptyMsg);
+                        }
+                    });
+
+                } catch (error) {
+                    console.error('Error loading questions:', error);
+                    resultMsg.textContent = 'فشل تحميل الأسئلة من قاعدة البيانات. يرجى المحاولة لاحقًا.';
+                    resultMsg.className = 'alert alert-danger';
+                }
+            }
+
+            document.getElementById('surveyForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const answers = [];
+
+                document.querySelectorAll('[name^="q_"]').forEach(el => {
+                    const qid = parseInt(el.name.split('_')[1]);
+                    if (el.type === 'checkbox' && el.checked) {
+                        answers.push({ QuestionId: qid, Value: el.value });
+                    } else if ((el.type === 'radio' && el.checked) || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') {
+                        answers.push({ QuestionId: qid, Value: el.value });
+                    }
+                });
+
+                const payload = {
+                    Sector: sector,
+                    Answers: answers
+                };
+
+                const res = await fetch('/api/survey/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await res.json();
+                const msg = document.getElementById('resultMsg');
+                if (res.ok) {
+                    msg.textContent = 'تم إرسال الاستبيان بنجاح';
+                    msg.className = 'alert alert-success';
+                    document.getElementById('surveyForm').reset();
+                } else {
+                    msg.textContent = result.message || 'فشل إرسال البيانات';
+                    msg.className = 'alert alert-danger';
+                }
+            });
+
+            loadQuestions();
+        });
+    </script>
+</body>
+</html>
+

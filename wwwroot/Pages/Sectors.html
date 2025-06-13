@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sector Selection | SOC Maturity Questionnaire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ncsc-primary: #005f87;
+            --ncsc-secondary: #003d57;
+            --ncsc-accent: #f7931e;
+            --ncsc-light: #e6f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .ncsc-header {
+            background: linear-gradient(135deg, var(--ncsc-primary), var(--ncsc-secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 5%;
+        }
+
+        .ncsc-logo {
+            height: 60px;
+            margin-left: 15px;
+        }
+
+        .main-container {
+            max-width: 800px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin: 0 auto 30px;
+            position: relative;
+            border: 1px solid #e0e0e0;
+        }
+
+        .selection-header {
+            background-color: var(--ncsc-primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .selection-body {
+            padding: 2.5rem;
+        }
+
+        .sector-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            height: 100%;
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+            .sector-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                border-color: var(--ncsc-accent);
+                text-decoration: none;
+            }
+
+            .sector-card i {
+                font-size: 2.5rem;
+                color: var(--ncsc-primary);
+                margin-bottom: 1rem;
+            }
+
+            .sector-card h3 {
+                color: var(--ncsc-primary);
+                margin-bottom: 1rem;
+            }
+
+            .sector-card p {
+                color: #666;
+            }
+
+        .btn-back {
+            color: var(--ncsc-primary);
+            border: 1px solid var(--ncsc-primary);
+            padding: 0.5rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+            .btn-back:hover {
+                background-color: var(--ncsc-light);
+            }
+
+        @media (max-width: 768px) {
+            .selection-body {
+                padding: 1.5rem;
+            }
+
+            .sector-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="ncsc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center text-md-start">
+                    <img src="../Image/NCSC_LOGO.png" alt="National Cybersecurity Center" class="ncsc-logo">
+                </div>
+                <div class="col-md-10 text-center text-md-start">
+                    <h1 class="h4 mb-0">National Cybersecurity Center</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Selection Container -->
+    <div class="main-container">
+        <div class="selection-header">
+            <h1 class="h2 mb-3">Select Your Sector</h1>
+            <p class="mb-0">Please choose the sector that best represents your organization</p>
+        </div>
+
+        <div class="selection-body">
+            <div class="row">
+                <!-- Education -->
+                <div class="col-md-6 mb-4">
+                    <div class="sector-card" onclick="selectSector('education')">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Education</h3>
+                        <p>For universities, schools, and educational institutions</p>
+                        <div class="mt-3 text-primary fw-bold">
+                            Begin Assessment <i class="fas fa-arrow-right ms-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health -->
+                <!--<div class="col-md-6 mb-4">
+                    <div class="sector-card" onclick="selectSector('health')">
+                        <i class="fas fa-hospital"></i>
+                        <h3>Healthcare</h3>
+                        <p>For hospitals, clinics, and medical facilities</p>
+                        <div class="mt-3 text-primary fw-bold">
+                            Begin Assessment <i class="fas fa-arrow-right ms-2"></i>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-4">
+            <a href="index.html" class="btn btn-back">
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
+            </a>
+        </div>
+
+        <!-- Support -->
+        <div class="alert alert-light mt-4 text-center">
+            <p class="mb-0">Don't see your sector? <a href="mailto:support@ncsc.gov.sa">Contact our support team</a>.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-muted mt-5 mb-4">
+        <div class="container">
+            <p class="mb-1">© 2025 National Cybersecurity Center. All rights reserved.</p>
+            <p class="mb-0">
+                <a href="#" class="text-muted me-3">Terms of Service</a>
+                <a href="#" class="text-muted">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function is now global (outside DOMContentLoaded)
+        function selectSector(sector) {
+            localStorage.setItem('selectedSector', sector);
+            if (sector === 'education') {
+                window.location.href = 'education-survey.html'; // تأكد من المسار الصحيح
+            } else if (sector === 'health') {
+                window.location.href = 'healthcare-survey.html';
+            }
+        }
+
+        // Optional: card animation
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.sector-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
